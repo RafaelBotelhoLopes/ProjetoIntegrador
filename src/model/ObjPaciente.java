@@ -13,7 +13,7 @@ public class ObjPaciente {
     public void setData(Date data) {
         this.data = data;
     }
-    private String nome, sexo, endereco, rg, estado_civil, telefone;
+    private String nome, sexo, endereco, rg, estado_civil, nascimento, telefone;
     private ObjCidade cidade;
     
     public ObjPaciente(){
@@ -24,12 +24,13 @@ public class ObjPaciente {
     }
 
     
-    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String tipo, ObjCidade cidade) {
+    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String estado_civil, String nascimento,String tipo, ObjCidade cidade) {
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.estado_civil = estado_civil;
+        this.nascimento = nascimento;
         this.sexo = sexo;
         this.cidade = cidade;
     }
@@ -80,6 +81,9 @@ public class ObjPaciente {
 
     public void setEstado_civil(String estado_civil) {
         this.estado_civil = estado_civil;
+    }
+    public void nascimento(String nascimento) {
+        this.nascimento = nascimento;
     }
 
     public String getTelefone() {
