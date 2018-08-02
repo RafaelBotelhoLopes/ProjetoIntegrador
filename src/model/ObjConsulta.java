@@ -6,9 +6,18 @@ public class ObjConsulta {
     
     private int codigo;
     private Date data_consulta;
+    private ObjConsulta consulta;
 
     public int getCodigo() {
         return codigo;
+    }
+
+    public ObjConsulta getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(ObjConsulta consulta) {
+        this.consulta = consulta;
     }
 
     public void setCodigo(int codigo) {
