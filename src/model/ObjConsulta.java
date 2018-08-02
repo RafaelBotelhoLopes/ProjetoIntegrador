@@ -6,19 +6,39 @@ public class ObjConsulta {
     
     private int codigo;
     private Date data_consulta;
-    private ObjConsulta consulta;
+    private ObjPaciente paciente;
+    private ObjFuncionario funcionario;
+    private ObjLaudo laudo;
+
+    public ObjLaudo getLaudo() {
+        return laudo;
+    }
+
+    public void setLaudo(ObjLaudo laudo) {
+        this.laudo = laudo;
+    }
+
+    public ObjFuncionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(ObjFuncionario funcionario) {
+        this.funcionario = funcionario;
+    }
 
     public int getCodigo() {
         return codigo;
     }
 
-    public ObjConsulta getConsulta() {
-        return consulta;
+    public ObjPaciente getPaciente() {
+        return paciente;
     }
 
-    public void setConsulta(ObjConsulta consulta) {
-        this.consulta = consulta;
+    public void setPaciente(ObjPaciente paciente) {
+        this.paciente = paciente;
     }
+
+    
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
@@ -31,5 +51,5 @@ public class ObjConsulta {
     public void setData_consulta(Date data_consulta) {
         this.data_consulta = data_consulta;
     }
-    
 }
+

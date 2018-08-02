@@ -5,6 +5,17 @@ import java.util.Date;
 public class ObjPaciente {
     private int codigo;
     private Date data;
+    private ObjConsulta consulta;
+
+    public ObjConsulta getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(ObjConsulta consulta) {
+        this.consulta = consulta;
+    }
+    
+    
 
     public Date getData() {
         return data;
