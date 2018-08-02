@@ -5,8 +5,10 @@
  */
 package telas;
 
+import dao.PacienteDAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.ObjPaciente;
 
 /**
  *
