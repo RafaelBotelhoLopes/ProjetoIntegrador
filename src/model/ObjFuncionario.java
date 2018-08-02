@@ -6,6 +6,7 @@ public class ObjFuncionario {
     private int codigo;
     private Date nascimento;
     private String nome, sexo, cpf, rg, estado_civil, telefone, escolaridade, endereco, nacionalidade;
+    private ObjCidade cidade;
 
     public int getCodigo() {
         return codigo;
@@ -94,5 +95,14 @@ public class ObjFuncionario {
     public void setNacionalidade(String nacionalidade) {
         this.nacionalidade = nacionalidade;
     }
+
+    public ObjCidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(ObjCidade cidade) {
+        this.cidade = cidade;
+    }
+
     
 }

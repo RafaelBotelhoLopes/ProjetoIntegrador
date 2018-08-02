@@ -24,7 +24,7 @@ public class ObjPaciente {
     }
 
     
-    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String estado_civil, String nascimento,String tipo, ObjCidade cidade) {
+    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String estado_civil, String nascimento, String tipo, ObjCidade cidade) {
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
@@ -81,10 +81,7 @@ public class ObjPaciente {
 
     public void setEstado_civil(String estado_civil) {
         this.estado_civil = estado_civil;
-    }
-    public void nascimento(String nascimento) {
-        this.nascimento = nascimento;
-    }
+    }    
 
     public String getTelefone() {
         return telefone;
@@ -92,6 +89,17 @@ public class ObjPaciente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+    public void nascimento(String nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
     }
 
     public ObjCidade getCidade() {
