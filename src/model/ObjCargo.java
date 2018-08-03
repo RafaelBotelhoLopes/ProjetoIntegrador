@@ -4,6 +4,15 @@ public class ObjCargo {
     private int codigo;
     private String nome;
     private double salario;
+    private ObjSetor setor;
+
+    public ObjSetor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(ObjSetor setor) {
+        this.setor = setor;
+    }
 
     public int getCodigo() {
         return codigo;

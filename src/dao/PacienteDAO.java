@@ -105,7 +105,7 @@ public class PacienteDAO {
                 + " c.nascimento,   "
                 + " c.rg,    "
                 + " c.estado civil, c.sexo   "
-                + " FROM clientes c                                "
+                + " FROM pacientes c                                "
                 + " INNER JOIN cidades d ON c.codCidade = d.codigo "
                 + " INNER JOIN consultas e ON c.codConsulta = e.codigo "
                 + " WHERE c.codigo  = " + codigo 
@@ -117,9 +117,9 @@ public class PacienteDAO {
              ObjCidade cidade = new ObjCidade();
              cidade.setCodigo(rs.getInt( 1 ));
              cidade.setNome(rs.getString( 2 ));
-             String tipo = rs.getString(  );
              
-             if( tipo.equals("") ) {
+             
+             
                  ObjPaciente pac = new ObjPaciente();
                  pac.setCodigo(rs.getInt( 1 ));
                  pac.setNome( rs.getString( 2 ));
@@ -131,7 +131,7 @@ public class PacienteDAO {
                  pac.setEstado_civil(rs.getString( 8 ));
                  pac.setCidade( cidade );
                  paciente = pac;
-            }
+            
              
             
          }catch (Exception e){ 
