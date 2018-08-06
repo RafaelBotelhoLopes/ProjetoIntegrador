@@ -4,7 +4,15 @@ import java.util.Date;
 
 public class ObjPaciente {
     private int codigo;
-    private Date data;
+    private Date nascimento;
+
+    public Date getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
+    }
     private ObjConsulta consulta;
 
     public ObjConsulta getConsulta() {
@@ -14,17 +22,9 @@ public class ObjPaciente {
     public void setConsulta(ObjConsulta consulta) {
         this.consulta = consulta;
     }
-    
-    
+        
 
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-    private String nome, sexo, endereco, rg, estado_civil, nascimento, telefone;
+    private String nome, sexo, endereco, rg, estado_civil, telefone;
     private ObjCidade cidade;
     
     public ObjPaciente(){
@@ -35,7 +35,7 @@ public class ObjPaciente {
     }
 
     
-    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String estado_civil, String nascimento, String tipo, ObjCidade cidade) {
+    public ObjPaciente(int codigo, String nome, String endereco, String telefone, String estado_civil, String tipo, ObjCidade cidade) {
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
@@ -101,18 +101,7 @@ public class ObjPaciente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    public void nascimento(String nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    public String getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(String nascimento) {
-        this.nascimento = nascimento;
-    }
-
+    
     public ObjCidade getCidade() {
         return cidade;
     }

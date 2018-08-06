@@ -77,8 +77,8 @@ public class FuncionarioDAO {
             cargo.setNome(rs.getString(17));
             
             ObjCidade cidade = new ObjCidade();
-            cidade.setCodigo(rs.getInt(1));
-            cidade.setNome(rs.getString(2));
+            cidade.setCodigo(rs.getInt(2));
+            cidade.setNome(rs.getString(4));
 
             Date nascimento = new Date(rs.getInt(9), (rs.getInt(8) - 1), rs.getInt(7));
 

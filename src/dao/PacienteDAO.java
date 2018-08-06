@@ -1,30 +1,28 @@
-
 package dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.ObjCidade;
-import model.ObjConsulta;
 import model.ObjPaciente;
-
 
 public class PacienteDAO {
 
     public static void inserir(ObjPaciente pac) {
+        String data = "" + pac.getNascimento().getYear() + "-" + (pac.getNascimento().getMonth() + 1) + "-" + pac.getNascimento().getDate();
         String sql = "INSERT INTO pacientes "
-                + " ( nome, telefone, endereco, nascimento, rg, sexo, estado civil, codCidade, codConsulta ) "
+                + " ( nome, telefone, endereco, nascimento, rg, sexo, estado_civil, codCidade ) "
                 + " VALUES ( "
-                + " '" + pac.getNome() +               "' , "
-                + " '" + pac.getTelefone() +           "' , "
-                + " '" + pac.getEndereco() +           "' , "
-                + " '" + pac.getNascimento() +         "' , "
-                + " '" + pac.getRg() +                 "' , "
-                + " '" + pac.getSexo() +               "' , "
-                + " '" + pac.getEstado_civil() +       "' , "
+                + " '" + pac.getNome() + "' , "
+                + " '" + pac.getTelefone() + "' , "
+                + " '" + pac.getEndereco() + "' , "
+                + " '" + data + "' ,  "
+                + " '" + pac.getRg() + "' , "
+                + " '" + pac.getSexo() + "' , "
+                + " '" + pac.getEstado_civil() + "' , "
                 + "  " + pac.getCidade().getCodigo() + "    "
-                + "  " + pac.getConsulta().getCodigo() + "    "
                 + " );";
 
         Conexao.executar(sql);
@@ -32,15 +30,14 @@ public class PacienteDAO {
 
     public static void editar(ObjPaciente pac) {
         String sql = "UPDATE clientes SET "
-                + " nome = '" + pac.getNome() +                    "' , "
-                + " telefone = '" + pac.getTelefone()+                    "' , "
-                + " endereco = '" + pac.getEndereco()+          "' , "
-                + " nascimento = '" + pac.getNascimento()  +           "' , "
-                + " rg = '" + pac.getRg() +                    "' , "
-                + " sexo = '" + pac.getSexo() +                        "' , "
-                + " estado civil = '" + pac.getEstado_civil()+         "' , "
+                + " nome = '" + pac.getNome() + "' , "
+                + " telefone = '" + pac.getTelefone() + "' , "
+                + " endereco = '" + pac.getEndereco() + "' , "
+                + " nascimento = '" + pac.getNascimento() + "' , "
+                + " rg = '" + pac.getRg() + "' , "
+                + " sexo = '" + pac.getSexo() + "' , "
+                + " estado_civil = '" + pac.getEstado_civil() + "' , "
                 + " codCidade = '" + pac.getCidade().getCodigo() + "    "
-                + " codConsulta = '" + pac.getConsulta().getCodigo() + "    "
                 + " WHERE codigo = " + pac.getCodigo();
 
         Conexao.executar(sql);
@@ -54,39 +51,37 @@ public class PacienteDAO {
 
     public static List<ObjPaciente> getPaciente() {
         List<ObjPaciente> lista = new ArrayList<>();
-        String sql = "SELECT c.codigo, d.codigo,  c.nome, d.nome, "
-                + " c.endereco, c.telefone,   "
-                + " c.nascimento,   "
-                + " c.rg,    "
-                + " c.estado civil, c.sexo   "
-                + " FROM paciente c                                "
-                + " INNER JOIN cidades d ON c.codCidade = d.codigo "
-                + " INNER JOIN consultas e ON c.codConsulta = e.codigo "
-                + " WHERE c.tipo = ''   "
-                + " ORDER BY c.nome";
+        String sql = "SELECT p.codigo, c.codigo, p.nome, c.nome, "
+                + " p.endereco, p.telefone,   "
+                + " DATE_FORMAT(p.nascimento, '%d') AS DIA, DATE_FORMAT(p.nascimento, '%m') AS MES, DATE_FORMAT(p.nascimento, '%Y') AS ANO  ,   "
+                + " p.rg,    "
+                + " p.estado_civil, p.sexo   "
+                + " FROM paciente p                                "
+                + " INNER JOIN cidades c ON p.codCidade = c.codigo "
+                + " ORDER BY p.nome";
         ResultSet rs = Conexao.consultar(sql);
 
         if (rs != null) {
 
             try {
+                ObjCidade cidade = new ObjCidade();
+                cidade.setCodigo(rs.getInt(2));
+                cidade.setNome(rs.getString(4));
 
+                Date nascimento = new Date(rs.getInt(9), (rs.getInt(8) - 1), rs.getInt(7));
                 while (rs.next()) {
                     ObjPaciente pac = new ObjPaciente();
-                    pac.setCodigo( rs.getInt(1));
-                    pac.setNome(rs.getString(2));
-                    pac.setTelefone(rs.getString(3));
-                    pac.setEndereco(rs.getString(4));
-                    pac.setNascimento(rs.getString(5));
-                    pac.setRg(rs.getString(6));
-                    pac.setSexo(rs.getString(7));
-                    pac.setEstado_civil(rs.getString(8));
+                    pac.setCodigo(rs.getInt(1));
+                    pac.setNome(rs.getString(3));
+                    pac.setTelefone(rs.getString(6));
+                    pac.setEndereco(rs.getString(5));
+                    pac.setNascimento(nascimento);
+                    pac.setRg(rs.getString(10));
+                    pac.setSexo(rs.getString(12));
+                    pac.setEstado_civil(rs.getString(11));
                     ObjCidade cid = new ObjCidade();
-                    ObjConsulta con = new ObjConsulta();
-                    pac.setCodigo( rs.getInt(2));
-                    pac.setNome( rs.getString(4));
-                    pac.setCidade( cid );
-                    pac.setConsulta( con );
-                    lista.add( pac );
+                    pac.setCidade(cid);
+                    lista.add(pac);
                 }
 
             } catch (Exception e) {
@@ -98,46 +93,45 @@ public class PacienteDAO {
         return lista;
 
     }
-    public static Object getPacienteByCodigo( int codigo ){
+
+    public static Object getPacienteByCodigo(int codigo) {
         Object paciente = null;
-         String sql = "SELECT c.codigo, d.codigo,  c.nome, d.nome, "
-                + " c.endereco, c.telefone   "
-                + " c.nascimento,   "
-                + " c.rg,    "
-                + " c.estado civil, c.sexo   "
-                + " FROM pacientes c                                "
-                + " INNER JOIN cidades d ON c.codCidade = d.codigo "
-                + " INNER JOIN consultas e ON c.codConsulta = e.codigo "
-                + " WHERE c.codigo  = " + codigo 
-                + " ORDER BY c.nome";
-         ResultSet rs = Conexao.consultar(sql);
-         try{
-             rs.first();
-             
-             ObjCidade cidade = new ObjCidade();
-             cidade.setCodigo(rs.getInt( 1 ));
-             cidade.setNome(rs.getString( 2 ));
-             
-             
-             
-                 ObjPaciente pac = new ObjPaciente();
-                 pac.setCodigo(rs.getInt( 1 ));
-                 pac.setNome( rs.getString( 2 ));
-                 pac.setTelefone(rs.getString( 3 ));
-                 pac.setEndereco(rs.getString( 4 ));
-                 pac.setNascimento(rs.getString( 5 ));
-                 pac.setRg(rs.getString( 6 ));
-                 pac.setSexo(rs.getString( 7 ));
-                 pac.setEstado_civil(rs.getString( 8 ));
-                 pac.setCidade( cidade );
-                 paciente = pac;
-            
-             
-            
-         }catch (Exception e){ 
-         
-         }
-        
+        String sql = "SELECT p.codigo, c.codigo, p.nome, c.nome, "
+                + " p.endereco, p.telefone,   "
+                + " DATE_FORMAT(p.nascimento, '%d') AS DIA, DATE_FORMAT(p.nascimento, '%m') AS MES, DATE_FORMAT(p.nascimento, '%Y') AS ANO  ,   "
+                + " p.rg,    "
+                + " p.estado_civil, p.sexo   "
+                + " FROM paciente p                                "
+                + " INNER JOIN cidades c ON p.codCidade = c.codigo "
+                + " WHERE p.codigo  = " + codigo
+                + " ORDER BY p.nome";
+        ResultSet rs = Conexao.consultar(sql);
+        try {
+            rs.first();
+
+            ObjCidade cidade = new ObjCidade();
+                cidade.setCodigo(rs.getInt(2));
+                cidade.setNome(rs.getString(4));
+
+            Date nascimento = new Date(rs.getInt(9), (rs.getInt(8) - 1), rs.getInt(7));
+
+            ObjPaciente pac = new ObjPaciente();
+                    pac.setCodigo(rs.getInt(1));
+                    pac.setNome(rs.getString(3));
+                    pac.setTelefone(rs.getString(6));
+                    pac.setEndereco(rs.getString(5));
+                    pac.setNascimento(nascimento);
+                    pac.setRg(rs.getString(10));
+                    pac.setSexo(rs.getString(12));
+                    pac.setEstado_civil(rs.getString(11));
+                    ObjCidade cid = new ObjCidade();
+                    pac.setCidade(cid);
+            paciente = pac;
+
+        } catch (Exception e) {
+
+        }
+
         return paciente;
-         }
     }
+}

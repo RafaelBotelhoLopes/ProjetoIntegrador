@@ -5,7 +5,7 @@ import model.ObjLaudo;
 public class LaudoDAO {
     public static void inserir(ObjLaudo lau) {
         String sql = "INSERT INTO laudos "
-                + " ( data_consulta, diagnos tico, codPaciente, codFuncionario ) "
+                + " ( data_consulta, diagnostico, codPaciente, codFuncionario ) "
                 + " VALUES ( "
                 + " '" + lau.getDiagnostico()+        "' , "
                 + " '" + lau.getData_consulta()+             "' , "
@@ -17,7 +17,7 @@ public class LaudoDAO {
     public static void editar(ObjLaudo lau) {
         String sql = "UPDATE laudos SET "
                 + " diagnostico = '" + lau.getDiagnostico()+                    "' , "
-                + " data consulta = '" + lau.getData_consulta()+          "' , "
+                + " data_consulta = '" + lau.getData_consulta()+          "' , "
                 + " codPaciente = '" + lau.getPaciente().getCodigo()+           "' , "
                 + " codFuncionario = '" + lau.getFuncionario().getCodigo()+           "'  "
                 + " WHERE codigo = " + lau.getCodigo();
